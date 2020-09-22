@@ -1,0 +1,64 @@
+{
+  "receiver": "webhook",
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "KubePersistentVolumeUsageCritical1",
+        "endpoint": "https-metrics",
+        "instance": "192.168.13.34:10250",
+        "job": "kubelet",
+        "namespace": "default",
+        "persistentvolumeclaim": "jenkins",
+        "prometheus": "monitoring/k8s",
+        "service": "kubelet",
+        "severity": "warning"
+      },
+      "annotations": {
+        "message": "The persistent volume claimed by jenkins in namespace default has 0% free.",
+        "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeusagecritical"
+      },
+      "startsAt": "2018-08-20T06:01:26.025235557Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://prometheus-k8s-0:9090/graph?g0.expr=100+%2A+kubelet_volume_stats_available_bytes%7Bjob%3D%22kubelet%22%7D+%2F+kubelet_volume_stats_capacity_bytes%7Bjob%3D%22kubelet%22%7D+%3C+3&amp;g0.tab=1"
+    },
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "KubePersistentVolumeUsageCritical2",
+        "endpoint": "https-metrics",
+        "instance": "192.168.13.34:10250",
+        "job": "kubelet",
+        "namespace": "default",
+        "persistentvolumeclaim": "jenkins",
+        "prometheus": "monitoring/k8s",
+        "service": "kubelet",
+        "severity": "warning"
+      },
+      "annotations": {
+        "message": "The persistent volume claimed by jenkins in namespace default has 0% free.",
+        "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeusagecritical"
+      },
+      "startsAt": "2018-08-20T06:01:26.025235557Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://prometheus-k8s-0:9090/graph?g0.expr=100+%2A+kubelet_volume_stats_available_bytes%7Bjob%3D%22kubelet%22%7D+%2F+kubelet_volume_stats_capacity_bytes%7Bjob%3D%22kubelet%22%7D+%3C+3&amp;g0.tab=1"
+    }
+  ],
+  "groupLabels": {
+    "alertname": "Test",
+    "job": "prometheus24"
+  },
+  "commonLabels": {
+    "alertname": "Test",
+    "dc": "eu-west-1",
+    "instance": "localhost:9090",
+    "job": "prometheus24"
+  },
+  "commonAnnotations": {
+    "description": "some description"
+  },
+  "externalURL": "http://simon-laptop:9093",
+  "version": "4",
+  "groupKey": "{}:{alertname=\"Test\", job=\"prometheus24\"}"
+}

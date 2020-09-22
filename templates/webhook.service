@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus webhook
+After=network.target
+
+[Service]
+User=webhook
+# Execute `systemctl daemon-reload` after ExecStart= is changed.
+ExecStart=/usr/local/bin/webhook
+[Install]
+WantedBy=multi-user.target
