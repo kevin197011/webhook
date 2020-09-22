@@ -5,17 +5,17 @@ all: pull push
 pull:
 	git pull
 
-push:
+push: fmt
 	git pull
 	git add .
 	git commit -m "Update."
 	git push origin master
 
 build:
+	go mod tidy
 	cd cmd && \
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../webhook && \
 	upx ../webhook
 
-copy:
-	cp -f /c/Users/norton/go/src/webhook/webhook /d/projects/devops/golang/kevin/webhook/webhook
-	cp -f /c/Users/norton/go/src/webhook/templates/config.yml /d/projects/devops/golang/kevin/webhook/templates/config.yml
+fmt:
+	gofmt -l -w ./

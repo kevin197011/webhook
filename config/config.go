@@ -12,7 +12,6 @@ const (
 	ClientSecret = "xxxxxxxxxxxxxxxxxxxxx"
 )
 
-
 type Config struct {
 	GroupName string `yaml: "groupName"`
 	LogPath   string `yaml: "logPath"`
