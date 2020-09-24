@@ -78,7 +78,7 @@ func whatsappPostHandler(w http.ResponseWriter, r *http.Request) {
 			msg += fmt.Sprintf("  %s = %s\\n", key, alert.Labels[key])
 		}
 
-		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["message"])
+		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["Summary"])
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
 			log.Printf("Time format err: %v", err)
