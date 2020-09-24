@@ -9,7 +9,7 @@ mkdir -p /etc/webhook/
 useradd webhook -s /sbin/nologin
 touch /var/log/webhook.log && chown -R webhook:webhook /var/log/webhook.log
 cp -f ./webhook /usr/local/bin/webhook
-( test -f /etc/webhook/config.yml && echo "webhook config.yml already exist, skip.." )|| cp -f ./templates/config.yml /etc/webhook/config.yml
+( test -f /etc/webhook/config.yml && echo "webhook config.yml already exist, skip ..." )|| cp -f ./templates/config.yml /etc/webhook/config.yml
 cp -f ./templates/webhook.service /lib/systemd/system/webhook.service
 chmod +x /usr/local/bin/webhook
 echo "Start webhook..."
@@ -20,5 +20,5 @@ systemctl status webhook
 sleep 10
 echo "Test send message..."
 source ./check.sh
-echo "Clean..."
+echo "Clean /tmp/webhook ..."
 rm -rf /tmp/webhook
