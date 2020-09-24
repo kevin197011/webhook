@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+yum install git -y
 test -d /opt/webhook && rm -rf /opt/webhook && echo "Delete old webhook repo!"
 echo "Get webhook..."
 cd /opt && git clone https://github.com/kevin197011/webhook.git
