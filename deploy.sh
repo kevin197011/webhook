@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 yum install git -y
-test -d /opt/webhook && rm -rf /opt/webhook && echo "Delete old webhook repo!"
+test -d /tmp/webhook && rm -rf /tmp/webhook && echo "Delete old webhook repo!"
 echo "Get webhook..."
 cd /opt && git clone https://github.com/kevin197011/webhook.git
-cd /opt/webhook
+cd /tmp/webhook
 mkdir -p /etc/webhook/
 useradd webhook -s /sbin/nologin
 touch /var/log/webhook.log && chown -R webhook:webhook /var/log/webhook.log
@@ -21,4 +21,4 @@ sleep 10
 echo "Test send message..."
 source ./check.sh
 echo "Clean..."
-rm -rf /opt/webhook
+rm -rf /tmp/webhook
