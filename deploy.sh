@@ -3,7 +3,7 @@
 yum install git -y
 test -d /tmp/webhook && rm -rf /tmp/webhook && echo "Delete old webhook repo!"
 echo "Get webhook..."
-cd /opt && git clone https://github.com/kevin197011/webhook.git
+cd /tmp && git clone https://github.com/kevin197011/webhook.git
 cd /tmp/webhook
 mkdir -p /etc/webhook/
 useradd webhook -s /sbin/nologin
