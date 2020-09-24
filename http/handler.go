@@ -8,6 +8,7 @@ import (
 	"sort"
 	"webhook/config"
 	"webhook/providers"
+	"webhook/utils"
 )
 
 func healthzHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,6 +39,8 @@ func whatsappPostHandler(w http.ResponseWriter, r *http.Request) {
 	var emoji string
 	dec := json.NewDecoder(r.Body)
 
+	keepLables := []string{"alertname", "circuit_bw", "circuit_id", "circuit_name", "datacenter", "instance", "subcat", "target"}
+
 	var m HookMessage
 	if err := dec.Decode(&m); err != nil {
 		log.Printf("error decoding message: %v", err)
@@ -62,7 +65,11 @@ func whatsappPostHandler(w http.ResponseWriter, r *http.Request) {
 
 		keys := make([]string, 0, len(alert.Labels))
 		for k := range alert.Labels {
-			keys = append(keys, k)
+			for _, val := range keepLables {
+				if k == val {
+					keys = append(keys, k)
+				}
+			}
 		}
 
 		sort.Strings(keys)
@@ -72,8 +79,11 @@ func whatsappPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["message"])
-		msg += fmt.Sprintf("*时间:* %s", alert.StartsAt)
-
+		timeVal, err := utils.TimeFormat(alert.StartsAt)
+		if err != nil {
+			log.Printf("Time format err: %v", err)
+		}
+		msg += fmt.Sprintf("*时间:* %s", timeVal)
 		log.Printf("send alert data: %v\n", msg)
 		providers.NewGroupOpt("123456", cf.GroupName).Send(msg)
 	}
