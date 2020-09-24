@@ -19,12 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bbdf292-b788-48f3-9912-26a1b43caf2f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/time.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webhook" beforeDir="false" afterPath="$PROJECT_DIR$/webhook" afterDir="false" />
-    </list>
+    <list default="true" id="5bbdf292-b788-48f3-9912-26a1b43caf2f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,6 +57,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration name="go build t1.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -124,5 +120,9 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="1802" height="266" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1600928288888" />
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1600929605532">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1600929605532" />
   </component>
 </project>
