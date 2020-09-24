@@ -11,6 +11,5 @@ func TimeFormat(s string) (string, error) {
 		fmt.Printf("TimeFormat time parse err: %v", err)
 		return "", err
 	}
-	ret := t.Format("2006-01-02T15:04:05")
-	return ret, nil
+	return t.Format("2006-01-02T15:04:05"), nil
 }
