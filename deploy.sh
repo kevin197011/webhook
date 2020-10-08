@@ -15,6 +15,7 @@ chmod +x /usr/local/bin/webhook
 echo "Start webhook..."
 systemctl daemon-reload
 systemctl restart webhook
+systemctl enable webhook
 echo "Show webhook status:"
 systemctl status webhook
 sleep 10
