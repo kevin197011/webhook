@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
-	"webhook/config"
-	"webhook/providers"
-	"webhook/utils"
+	"webhook/pkg/config"
+	"webhook/pkg/providers"
+	"webhook/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"

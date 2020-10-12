@@ -3,7 +3,7 @@ package http
 import (
 	"fmt"
 	"time"
-	"webhook/config"
+	"webhook/pkg/config"
 
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"

@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"webhook/config"
+	"webhook/pkg/config"
 
 	"go.uber.org/zap"
 )

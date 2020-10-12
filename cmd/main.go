@@ -1,10 +1,10 @@
 package main
 
 import (
-	"webhook/config"
-	_ "webhook/daemon"
-	"webhook/http"
-	"webhook/utils"
+	"webhook/pkg/config"
+	_ "webhook/pkg/daemon"
+	"webhook/pkg/http"
+	"webhook/pkg/utils"
 
 	"go.uber.org/zap"
 )
