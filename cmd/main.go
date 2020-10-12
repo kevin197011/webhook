@@ -1,27 +1,14 @@
 package main
 
 import (
-	"log"
-	"os"
-	"webhook/config"
+	"go.uber.org/zap"
 	_ "webhook/daemon"
 	"webhook/http"
-	"webhook/utils"
 )
 
-var (
-	logFile *os.File
-	err     error
-)
+var Logger *zap.Logger
 
 func main() {
-	logPath := config.NewConfig().LogPath
-	logFile, err = utils.LogSetup(logPath, logFile)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer logFile.Close()
 	http.Run()
-	log.Println("start webhook server...")
+	Logger.Info("WebHook Server Startup...")
 }
