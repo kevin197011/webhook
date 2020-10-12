@@ -11,7 +11,7 @@ push: fmt
 	git commit -m "Update."
 	git push origin master
 
-build:
+build: fmt
 	go mod tidy
 	cd cmd && \
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../webhook && \

@@ -2,13 +2,18 @@ package http
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+	"github.com/gin-gonic/gin"
 	"webhook/config"
 )
 
-func InitRouter() {
-	http.HandleFunc("/healthz", healthzHandler)
-	http.HandleFunc("/whatsapp", whatsappAlertsHandler)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", config.NewConfig().Port), nil))
+func Router() *gin.Engine {
+	r := gin.Default()
+	v1 := r.Group("/v1")
+	v1.GET("/healthz", healthzHandler)
+	v1.POST("whatsapp", whatsappAlertsHandler)
+	return r
+}
+
+func Run() {
+	_ = Router().Run(fmt.Sprintf(":%s", config.NewConfig().Port))
 }

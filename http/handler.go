@@ -1,8 +1,8 @@
 package http
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"sort"
@@ -11,82 +11,57 @@ import (
 	"webhook/utils"
 )
 
-func healthzHandler(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	w.Write([]byte("ok!"))
+func healthzHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg":  "ok",
+		"data": "healthz",
+	})
 }
 
-func getHandler(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	w.Write([]byte("Use a POST request to send a message!"))
-}
-
-func whatsappAlertsHandler(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	log.Printf("Npt recv request...")
-	switch r.Method {
-	case http.MethodGet:
-		getHandler(w, r)
-	case http.MethodPost:
-		whatsappPostHandler(w, r)
-	default:
-		http.Error(w, "Unsupported HTTP method!", 400)
-	}
-}
-
-func whatsappPostHandler(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+func whatsappAlertsHandler(c *gin.Context) {
+	var messages HookMessage
 	var emoji string
-	dec := json.NewDecoder(r.Body)
+	cf := config.NewConfig()
 
-	keepLables := []string{"alertname", "circuit_bw", "circuit_id", "circuit_name", "datacenter", "instance", "subcat", "target"}
-
-	var m HookMessage
-	if err := dec.Decode(&m); err != nil {
-		log.Printf("error decoding message: %v", err)
-		http.Error(w, "invalid request body", 400)
+	if err := c.Bind(&messages); err != nil {
+		log.Printf("Bind json data err: %s \n", err)
 		return
 	}
-	log.Printf("bind alert json data: %v\n", m)
 
-	if m.Status == "firing" {
+	log.Printf("Bind json data: %#v \n", messages)
+
+	if messages.Status == "firing" {
 		emoji = "❌"
 	} else {
 		emoji = "✅"
 	}
 
-	cf := config.NewConfig()
-
-	for _, alert := range m.Alerts {
+	for _, alert := range messages.Alerts {
 		var msg string
-
-		msg = fmt.Sprintf("*状态:* %s %s\\n", m.Status, emoji)
-		msg += "*标签:*\\n"
-
+		msg = fmt.Sprintf("*Status:* %s %s\\n", messages.Status, emoji)
+		msg += "*Labels:*\\n"
 		keys := make([]string, 0, len(alert.Labels))
 		for k := range alert.Labels {
-			for _, val := range keepLables {
-				if k == val {
-					keys = append(keys, k)
-				}
-			}
+			keys = append(keys, k)
 		}
-
 		sort.Strings(keys)
-
 		for _, key := range keys {
 			msg += fmt.Sprintf("  %s = %s\\n", key, alert.Labels[key])
 		}
-
-		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["Summary"])
+		msg += fmt.Sprintf("*Annotations:*\\n  %s\\n", alert.Annotations["message"])
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
-			log.Printf("Time format err: %v", err)
+			log.Printf("Time format err: %v\n", err)
 		}
-		msg += fmt.Sprintf("*时间:* %s", timeVal)
+		msg += fmt.Sprintf("*TimeAt:* %s", timeVal)
 		log.Printf("send alert data: %v\n", msg)
-		providers.NewGroupOpt("123456", cf.GroupName).Send(msg)
+		providers.SendMsg(providers.NewWhatsappOpt("123456", cf.GroupName), msg)
 	}
 
-	w.Write([]byte(`{"status": 200, "msg": "ok"}`))
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg":  "ok",
+		"data": "success!",
+	})
 }

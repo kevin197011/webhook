@@ -26,6 +26,6 @@ func NewConfig() *Config {
 	if err != nil {
 		log.Fatalf("Fatal error config file: %s \n", err)
 	}
-	viper.Unmarshal(&cf)
+	_ = viper.Unmarshal(&cf)
 	return cf
 }
