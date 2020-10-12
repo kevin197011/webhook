@@ -1,14 +1,20 @@
 package main
 
 import (
-	"go.uber.org/zap"
+	"webhook/config"
 	_ "webhook/daemon"
 	"webhook/http"
+	"webhook/utils"
+
+	"go.uber.org/zap"
 )
 
-var Logger *zap.Logger
+func init() {
+	utils.SetLogs(zap.DebugLevel, utils.LOGFORMAT_CONSOLE, config.NewConfig().LogPath)
+}
 
 func main() {
-	http.Run()
-	Logger.Info("WebHook Server Startup...")
+	if err := http.Run(); err != nil {
+		zap.L().Fatal("webhook server start fail!", zap.Error(err))
+	}
 }

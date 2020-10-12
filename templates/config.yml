@@ -3,6 +3,6 @@
 groupName: 'k8s-test1'
 
 # log打印路径文件
-logPath: '/var/log/webhook.log'
+logPath: '/var/log/webhook/webhook.log'
 # 运行端口
 port: 8000

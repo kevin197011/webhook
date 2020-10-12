@@ -2,16 +2,19 @@ package http
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"sort"
 	"webhook/config"
 	"webhook/providers"
 	"webhook/utils"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func healthzHandler(c *gin.Context) {
+	zap.L().Info("webhook interface is healthz!")
+
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "ok",
@@ -22,14 +25,12 @@ func healthzHandler(c *gin.Context) {
 func whatsappAlertsHandler(c *gin.Context) {
 	var messages HookMessage
 	var emoji string
-	cf := config.NewConfig()
 
 	if err := c.Bind(&messages); err != nil {
-		log.Printf("Bind json data err: %s \n", err)
+		zap.L().Error("Bind json data fail!", zap.Error(err))
 		return
 	}
-
-	log.Printf("Bind json data: %#v \n", messages)
+	zap.L().Info("Bind json data sucess.", zap.Any("data", messages))
 
 	if messages.Status == "firing" {
 		emoji = "❌"
@@ -52,11 +53,11 @@ func whatsappAlertsHandler(c *gin.Context) {
 		msg += fmt.Sprintf("*Annotations:*\\n  %s\\n", alert.Annotations["message"])
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
-			log.Printf("Time format err: %v\n", err)
+			zap.L().Error("Time format error!", zap.Error(err))
 		}
 		msg += fmt.Sprintf("*TimeAt:* %s", timeVal)
-		log.Printf("send alert data: %v\n", msg)
-		providers.SendMsg(providers.NewWhatsappOpt("123456", cf.GroupName), msg)
+		zap.L().Info("send alert data.", zap.Any("msg", msg))
+		providers.SendMsg(providers.NewWhatsappOpt("123456", config.NewConfig().GroupName), msg)
 	}
 
 	c.JSON(http.StatusOK, gin.H{
