@@ -25,14 +25,15 @@ func NewWhatsappOpt(groupAdmin string, groupName string) *whatsappOpt {
 func (w *whatsappOpt) send(msg string) {
 	message := fmt.Sprintf(`{ "group_admin":"%s", "group_name": "%s", "message": "%s" }`,
 		w.groupAdmin, w.groupName, msg)
-	zap.L().Info("whatsapp post alert.", zap.Any("data", message))
+	zap.L().Info("whatsapp post alert", zap.Any("data", message))
 	client := &http.Client{}
 	data := strings.NewReader(message)
 	url := fmt.Sprintf("http://api.whatsmate.net/v3/whatsapp/group/text/message/%s", config.InstanceID)
-	zap.L().Info("Request url:", zap.Any("url", url))
+	zap.L().Info("Request url", zap.Any("data", url))
 	req, err := http.NewRequest("POST", url, data)
 	if err != nil {
 		zap.L().Error("NewRequest whatsapp api fail", zap.Error(err))
+		return
 	}
 	req.Header.Set("X-WM-CLIENT-ID", config.ClientID)
 	req.Header.Set("X-WM-CLIENT-SECRET", config.ClientSecret)
@@ -40,10 +41,16 @@ func (w *whatsappOpt) send(msg string) {
 	resp, err := client.Do(req)
 	if err != nil {
 		zap.L().Error("Client.Do fail", zap.Error(err))
+		return
 	}
 	bodyText, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		zap.L().Error("ioutil.ReadAll fail", zap.Error(err))
+		return
 	}
-	zap.L().Info("Request whatsapp response", zap.Any("response", bodyText))
+	if resp.StatusCode != http.StatusOK {
+		zap.L().Error("Request whatsapp fail", zap.Any("data", bodyText))
+		return
+	}
+	zap.L().Info("Request whatsapp success", zap.Any("data", bodyText))
 }

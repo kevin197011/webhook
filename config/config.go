@@ -1,9 +1,8 @@
 package config
 
 import (
-	"log"
-
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
 const (
@@ -13,19 +12,22 @@ const (
 )
 
 type Config struct {
-	GroupName string `yaml: "groupName"`
-	LogPath   string `yaml: "logPath"`
-	Port      string `yaml: "port"`
+	GroupName  string `yaml: "groupName"`
+	GroupNameW string `yaml: "groupNameW"`
+	GroupNameB string `yaml: "groupNameB"`
+	LogPath    string `yaml: "logPath"`
+	Port       string `yaml: "port"`
 }
 
 func NewConfig() *Config {
 	var cf *Config
 	viper.SetConfigName("config")
 	viper.AddConfigPath("/etc/webhook/")
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("Fatal error config file: %s \n", err)
+	if err := viper.ReadInConfig(); err != nil {
+		zap.L().Fatal("ReadInConfig fail", zap.Error(err))
 	}
-	_ = viper.Unmarshal(&cf)
+	if err := viper.Unmarshal(&cf); err != nil {
+		zap.L().Error("Unmarshal fail", zap.Error(err))
+	}
 	return cf
 }
