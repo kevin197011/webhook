@@ -5,7 +5,7 @@ test -d /tmp/webhook && rm -rf /tmp/webhook && echo "Delete old webhook repo!"
 echo "Get webhook..."
 cd /tmp && git clone https://github.com/kevin197011/webhook.git
 cd /tmp/webhook
-mkdir -p /etc/webhook/
+mkdir -p /etc/webhook/webhook
 useradd webhook -s /sbin/nologin
 touch /var/log/webhook/webhook.log && chown -R webhook:webhook /var/log/webhook
 cp -f ./webhook /usr/local/bin/webhook
