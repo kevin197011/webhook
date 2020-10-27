@@ -18,4 +18,5 @@ build: fmt
 	upx ../webhook
 
 fmt:
+	sudo chown -R norton:norton ./
 	gofmt -l -w ./

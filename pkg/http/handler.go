@@ -55,7 +55,11 @@ func whatsappAlertsHandler(c *gin.Context) {
 		for _, key := range keys {
 			msg += fmt.Sprintf("  %s = %s\\n", key, alert.Labels[key])
 		}
-		msg += fmt.Sprintf("*Annotations:*\\n  %s\\n", alert.Annotations["message"])
+		if message, ok := alert.Annotations["message"]; ok {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", message)
+		} else {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["summary"])
+		}
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
 			zap.L().Error("Time format error!", zap.Error(err))
@@ -111,7 +115,11 @@ func whatsappAlertsHandlerW(c *gin.Context) {
 		for _, key := range keys {
 			msg += fmt.Sprintf("  %s = %s\\n", key, alert.Labels[key])
 		}
-		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["message"])
+		if message, ok := alert.Annotations["message"]; ok {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", message)
+		} else {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["summary"])
+		}
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
 			zap.L().Error("Time format error!", zap.Error(err))
@@ -167,7 +175,11 @@ func whatsappAlertsHandlerB(c *gin.Context) {
 		for _, key := range keys {
 			msg += fmt.Sprintf("  %s = %s\\n", key, alert.Labels[key])
 		}
-		msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["message"])
+		if message, ok := alert.Annotations["message"]; ok {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", message)
+		} else {
+			msg += fmt.Sprintf("*注解:*\\n  %s\\n", alert.Annotations["summary"])
+		}
 		timeVal, err := utils.TimeFormat(alert.StartsAt)
 		if err != nil {
 			zap.L().Error("Time format error!", zap.Error(err))
