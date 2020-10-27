@@ -20,7 +20,7 @@ systemctl enable webhook
 echo "Show webhook status:"
 systemctl status webhook
 sleep 10
-echo "Test send message..."
-source ./check.sh
-echo "Clean /tmp/webhook ..."
+#echo "Test send message..."
+#source ./check.sh
+#echo "Clean /tmp/webhook ..."
 rm -rf /tmp/webhook
