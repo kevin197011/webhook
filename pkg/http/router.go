@@ -17,9 +17,9 @@ func Router() *gin.Engine {
 	engine.Use(ginzap.RecoveryWithZap(zap.L(), true))
 	v1 := engine.Group("/v1")
 	v1.GET("/healthz", healthzHandler)
-	v1.POST("whatsapp", whatsappAlertsHandler)
-	v1.POST("whatsappw", whatsappAlertsHandlerW)
-	v1.POST("whatsappb", whatsappAlertsHandlerB)
+	v1.POST("/whatsapp", whatsappAlertsHandler)
+	v1.POST("/whatsappw", whatsappAlertsHandlerW)
+	v1.POST("/whatsappb", whatsappAlertsHandlerB)
 	return engine
 }
 
