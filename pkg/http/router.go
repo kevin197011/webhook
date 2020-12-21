@@ -20,6 +20,7 @@ func Router() *gin.Engine {
 	v1.POST("/whatsapp", whatsappAlertsHandler)
 	v1.POST("/whatsappw", whatsappAlertsHandlerW)
 	v1.POST("/whatsappb", whatsappAlertsHandlerB)
+	v1.POST("/whatsappc", whatsappAlertsHandlerC)
 	return engine
 }
 
