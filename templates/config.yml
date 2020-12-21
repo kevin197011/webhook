@@ -3,6 +3,7 @@
 groupName: 'k8s-test1'
 groupNameW: 'k8s-test1'
 groupNameB: 'k8s-test1'
+groupNameC: 'test1'
 
 # log打印路径文件
 logPath: '/var/log/webhook/webhook.log'
