@@ -15,6 +15,7 @@ type Config struct {
 	GroupName  string `yaml: "groupName"`
 	GroupNameW string `yaml: "groupNameW"`
 	GroupNameB string `yaml: "groupNameB"`
+	GroupNameC string `yaml: "groupNameC"`
 	LogPath    string `yaml: "logPath"`
 	Port       string `yaml: "port"`
 }
